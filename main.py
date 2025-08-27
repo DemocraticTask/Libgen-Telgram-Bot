@@ -148,16 +148,16 @@ async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_search_results[(user_id, chat_id)] = (results, datetime.now())
     cleanup_old_results()
 
-    # Prepare table data with sanitized titles
+    # Prepare list data with sanitized titles
     table_data = [
         [book.id, (book.title if book.title else "N/A").replace("<", "&lt;").replace(">", "&gt;"), book.author, book.year, book.extension]
         for book in results
     ]
-    headers = ["ID", "Title", "Author", "Year", "Extension"]
 
-    # Format table and send
-    table = tabulate(table_data, headers=headers, tablefmt="simple",maxcolwidths=[None, 15, 10, None,None])
-    message = f"<b>Search Results for '{query}' (showing up to {MAX_SEARCH_RESULTS}):</b>\n<pre>{table}</pre>\n"
+    # Format as list and send
+    message = f"<b>Search Results for '{query}' (showing up to {MAX_SEARCH_RESULTS}):</b>\n"
+    for book in table_data:
+        message += f"<pre>ID: {book[0]}\nTitle: {book[1][:50]}{'...' if len(book[1]) > 50 else ''}\nAuthor: {book[2][:30]}{'...' if len(book[2]) > 30 else ''}\nYear: {book[3]}\nExtension: {book[4]}</pre>\n"
     if truncated:
         message += f"More results were found. Refine your query to see others.\n"
     message += "Please reply with the ID of the book to download."
@@ -206,10 +206,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         content_length = response.headers.get("Content-Length")
         if content_length and int(content_length) > MAX_FILE_SIZE_MB * 1024 * 1024:
             await update.message.reply_text(
-                f"File is too large (>{MAX_FILE_SIZE_MB} MB). Cannot send via Telegram.",
+                f"File is too large (>{MAX_FILE_SIZE_MB} MB). Download link: {selected_book.resolved_download_link}",
                 parse_mode="HTML"
             )
-            logging.warning(f"File for book ID {selected_id} exceeds {MAX_FILE_SIZE_MB} MB in chat {chat_id}")
+            logging.info(f"Sent download link for book ID {selected_id} to user {user_id} in chat {chat_id}")
             return
 
         # Determine file extension for saving
