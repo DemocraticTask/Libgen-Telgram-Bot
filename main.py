@@ -150,7 +150,7 @@ async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
     headers = ["ID", "Title", "Author", "Year", "Extension"]
 
     # Format table and send
-    table = tabulate(table_data, headers=headers, tablefmt="grid")
+    table = tabulate(table_data, headers=headers, tablefmt="simple",maxcolwidths=[None, 15, 10, None,None])
     message = f"<b>Search Results for '{query}' (showing up to {MAX_SEARCH_RESULTS}):</b>\n<pre>{table}</pre>\n"
     if truncated:
         message += f"More results were found. Refine your query to see others.\n"
