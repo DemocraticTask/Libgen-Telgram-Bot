@@ -38,7 +38,7 @@ A Telegram bot for searching and downloading books using Libgen.
      - `BOT_USERNAME`: Your bot’s Telegram username (e.g., `@YourBotName`).
      - `LIBGEN_MIRRORS`: Comma-separated Libgen mirror codes (default: `gs`).
      - `RESULT_EXPIRY_MINUTES`: Time (in minutes) before search results expire (default: `10`).
-     - `MAX_FILE_SIZE_MB`: Maximum file size for downloads in MB (default: `50`).
+     - `MAX_FILE_SIZE_MB`: Maximum file size for downloads in MB (default: `50`, if file>`50` it sends the download link instead).
      - `TEMP_DIR`: Directory for temporary files (default: `/tmp` on Linux/Mac, `%TEMP%` on Windows).
      - `MAX_SEARCH_RESULTS`: Maximum number of search results to display (default: `10`).
 
@@ -59,7 +59,7 @@ A Telegram bot for searching and downloading books using Libgen.
 - Bot uses Libgen_api_enhanced API from https://github.com/onurhanak/libgen-api-enhanced which is also in active development, which might break this program.
 - There are currenlty a lot of Issues which i have identified but won't be continuing/developing/maintaing with the project.
 - Ensure a stable internet connection for downloading files.
-- The bot respects Telegram’s file size limit (default: 50 MB).
+- The bot respects Telegram’s file size limit (default: 50 MB), so if a file is greater than the `MAX_FILE_SIZE_MB` it gives the download link instead.
 - Log files (`bot.log`) and temporary files are created in `TEMP_DIR` and excluded from the repository via `.gitignore`.
 - Some times all mirrors maybe down.
 
