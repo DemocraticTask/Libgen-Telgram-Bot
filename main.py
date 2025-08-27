@@ -12,17 +12,23 @@ import requests
 import tempfile
 import shutil
 from telegram.error import BadRequest
+from logging.handlers import RotatingFileHandler
 
-# Configure logging to output to both console and file
+# Sized-based rotation login
+log_handler = RotatingFileHandler(
+    filename="bot.log",
+    maxBytes=5 * 1024 * 1024,  # 5 MB
+    backupCount=0
+)
+log_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler("bot.log"),
+        log_handler,
         logging.StreamHandler()  # Outputs logs to console in real-time
     ]
 )
-
 # Load environment variables
 load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
