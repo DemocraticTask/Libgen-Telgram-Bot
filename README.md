@@ -1,4 +1,4 @@
-# Telegram Book Search Bot
+# Telegram Book Download Bot
 
 A Telegram bot for searching and downloading books using Libgen.
 
