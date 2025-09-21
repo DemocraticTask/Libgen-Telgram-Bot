@@ -7,7 +7,7 @@ A Telegram bot for searching and downloading books using Libgen.
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/DemocraticTask/Libgen-Telgram-Bot
+   git clone https://github.com/DisorganizedPirate/Libgen-Telgram-Bot.git
    cd Libgen-Telgram-Bot
    ```
 
